@@ -1,21 +1,23 @@
 class AddInitialTables < ActiveRecord::Migration
   def change
-    create_table :relatives do |t|
-      t.column :name, :string
-    end
     create_table :relationships do |t|
-      t.column :type, :string
+      t.column :relation, :string
     end
-    create_table :persons do |t|
+    create_table :people do |t|
       t.column :name, :string
+      t.references :relative, index: true
     end
-    create_table :persons_relationships_relatives, id: false do |t|
-      t.integer :person_id
+    create_table :relatives_relationships, id: false do |t|
+      t.integer :relative_id
+      t.integer :relationship_id
+    end
+    create_table :people_relationships, id: false do |t|
       t.integer :relationship_id
       t.integer :person_id
     end
-    add_index :persons_relationships_relatives, :person_id
-    add_index :persons_relationships_relatives, :relationship_id
-    add_index :persons_relationships_relatives, :person_id      
+    add_index :relatives_relationships, :relationship_id
+    add_index :relatives_relationships, :relative_id
+    add_index :people_relationships, :relationship_id
+    add_index :people_relationships, :person_id
   end
 end
