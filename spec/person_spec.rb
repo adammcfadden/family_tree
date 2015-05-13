@@ -3,15 +3,17 @@ require 'spec_helper'
 describe Person do
   describe 'the ability to create and recall' do
     it 'add a person, relative, and relationship. recall relationship and relative' do
-      person = Person.create name: 'tom'
-      binding.pry
-      relative = Person.create name: 'tony'
-      relationship = Relationship.create relation: 'brother'
+      person1 = Person.create name: 'tom'
+      person2 = Person.create name: 'bob'
+      relation = Relationship.create({relation: 'brother', person_id: person1.id, relative_id: person2.id})
+      # relation1 = Relationship.create({relation: 'brother', person_id: person2.id, relative_id: person1.id})
 
-      relationship.update({relative_ids: relative.id, person_ids: person.id})
-      person_relatives = person.relationship
-      expect(person_relatives.name).to(eq('tony'))
-      # expect(person_relationships.relation).to(eq('brother'))
+      tester = person1.relationships.first
+      binding.pry
+      tester_id = tester.relative_id
+      tester_relation = tester.relation
+      expect(tester_relation).to(eq('brother'))
+      expect(tester_id).to(eq(person2.id))
     end
   end
 end

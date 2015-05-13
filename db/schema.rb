@@ -17,30 +17,13 @@ ActiveRecord::Schema.define(version: 20150513164937) do
   enable_extension "plpgsql"
 
   create_table "people", force: :cascade do |t|
-    t.string  "name"
-    t.integer "relative_id"
+    t.string "name"
   end
-
-  add_index "people", ["relative_id"], name: "index_people_on_relative_id", using: :btree
-
-  create_table "people_relationships", id: false, force: :cascade do |t|
-    t.integer "relationship_id"
-    t.integer "person_id"
-  end
-
-  add_index "people_relationships", ["person_id"], name: "index_people_relationships_on_person_id", using: :btree
-  add_index "people_relationships", ["relationship_id"], name: "index_people_relationships_on_relationship_id", using: :btree
 
   create_table "relationships", force: :cascade do |t|
-    t.string "relation"
-  end
-
-  create_table "relatives_relationships", id: false, force: :cascade do |t|
+    t.string  "relation"
+    t.integer "person_id"
     t.integer "relative_id"
-    t.integer "relationship_id"
   end
-
-  add_index "relatives_relationships", ["relationship_id"], name: "index_relatives_relationships_on_relationship_id", using: :btree
-  add_index "relatives_relationships", ["relative_id"], name: "index_relatives_relationships_on_relative_id", using: :btree
 
 end
