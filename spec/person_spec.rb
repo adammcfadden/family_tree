@@ -6,14 +6,12 @@ describe Person do
       person1 = Person.create name: 'tom'
       person2 = Person.create name: 'bob'
       relation = Relationship.create({relation: 'brother', person_id: person1.id, relative_id: person2.id})
-      # relation1 = Relationship.create({relation: 'brother', person_id: person2.id, relative_id: person1.id})
-
-      tester = person1.relationships.first
-      binding.pry
-      tester_id = tester.relative_id
-      tester_relation = tester.relation
-      expect(tester_relation).to(eq('brother'))
-      expect(tester_id).to(eq(person2.id))
+      test1 = relation.person
+      test2 = relation.relative
+      relation_type = relation.relation
+      expect(relation_type).to(eq('brother'))
+      expect(test1.name).to(eq(person1.name))
+      expect(test2.name).to(eq(person2.name))
     end
   end
 end

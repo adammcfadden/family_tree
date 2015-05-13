@@ -1,10 +1,6 @@
 class Person < ActiveRecord::Base
 
-
-has_many :relationships, :foreign_key => "person_id",
-  class_name: "Relationship"
-
-
-has_many :relatives, :through => :relationships
-
-end
+  has_and_belongs_to_many :relatives, class_name: "Person",
+                                       join_table: "relationships",
+                                       association_foreign_key: "relative_id"
+  end
